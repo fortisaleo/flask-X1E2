@@ -1,7 +1,17 @@
+
+
+
 from flask import Flask, jsonify
+from nba_api.stats.static import teams
 import os
 
 app = Flask(__name__)
+
+@app.route("/teams")
+def get_teams():
+    all_teams = teams.get_teams()
+    return jsonify(all_teams)
+
 
 
 @app.route('/')
