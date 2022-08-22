@@ -2,6 +2,7 @@
 
 
 from flask import Flask, jsonify, request
+import simplejson
 
 from nba_api.stats.static import teams
 from nba_api.stats.endpoints import leaguegamefinder
@@ -19,7 +20,7 @@ def get_games():
     team_id = request.args.get('team_id')
     gamefinder = leaguegamefinder.LeagueGameFinder(team_id_nullable=team_id)
     games = gamefinder.get_data_frames()[0]
-    return jsonify(games.to_dict('records'))
+    return jsonify(simplejson.dumps(games.to_dict('records'), ignore_nan=True))
 
 
 @app.route('/')
